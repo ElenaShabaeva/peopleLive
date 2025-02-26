@@ -1,11 +1,15 @@
-<script>
-
-</script>
-
 <template>
-  <div></div>
+    <div>
+        <PageHeader />
+    </div>
 </template>
 
-<style lang="less">
+<script>
+import PageHeader from "@/components/blocks/PageHeader.vue";
 
-</style>
+export default {
+    components: {
+        PageHeader,
+    },
+};
+</script>
