@@ -1,18 +1,35 @@
 <template>
     <div>
-        <PageHeader />
-        <ListingArticles />
+        <PageHeader :activeTab="activeTab" @setTab="onSetTab"/>
+           
+        <PageRules v-if="activeTab === 'rules'" />
+        <PageContacts v-else-if="activeTab === 'contacts'" />
+        <PageHome v-else/> 
     </div>
 </template>
 
 <script>
 import PageHeader from "@/components/blocks/PageHeader.vue";
-import ListingArticles from "./components/blocks/ListingArticles.vue";
+import PageHome from "@/components/page/PageHome.vue";
+import PageRules from "@/components/page/PageRules.vue";
+import PageContacts from "@/components/page/PageContacts.vue";
 
 export default {
     components: {
         PageHeader,
-        ListingArticles,
+        PageHome,
+        PageRules,
+        PageContacts,
+    },
+    data(){
+        return{
+            activeTab: "home",
+        };
+    },
+    methods: {
+        onSetTab(value) {
+            this.activeTab = value;
+        },
     },
 };
 </script>
