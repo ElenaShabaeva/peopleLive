@@ -12,32 +12,15 @@
             </div>
 
             <nav class="page-header__nav">
-                <button
+                <RouterLink
+                    v-for="tab in tabs"
+                    :key="tab.path"
                     type="button"
                     class="page-header__nav-item"
-                    :class="{ 'page-header__nav-item--active': activeTab === 'home' }"
-                    v-on:click="setTab('home')"
+                    :to="tab.path"
                 >
-                    Главная
-                </button>
-
-                <button 
-                    type="button" 
-                    class="page-header__nav-item" 
-                    :class="{ 'page-header__nav-item--active': activeTab === 'rules' }"
-                    @click="setTab('rules')"
-                >
-                    Правила
-                </button>
-
-                <button 
-                    type="button" 
-                    class="page-header__nav-item" 
-                    :class="{ 'page-header__nav-item--active': activeTab === 'contacts' }"
-                    @click="setTab('contacts')"
-                >
-                    Контакты
-                </button>
+                    {{ tab.title }}
+                </RouterLink>
             </nav>
         </div>
     </header>
@@ -50,18 +33,24 @@ export default {
     components: {
         SvgLogo,
     },
-    emits: ['setTab'],
-    props: {
-        activeTab: {
-            type: String,
-            default: "",
-        },
+    data(){
+        return{
+            tabs: [
+                {
+                    title: "Главная",
+                    path: "/",
+                },
+                {
+                    title: "Правила",
+                    path: "/rules",
+                },
+                {
+                    title: "Контакты",
+                    path: "/contacts",
+                },
+            ],
+        };
     },
-    methods: {
-        setTab(value) {
-            this.$emit("setTab", value)
-        }
-    }
 };
 </script>
 
