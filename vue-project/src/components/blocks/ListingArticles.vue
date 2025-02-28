@@ -5,6 +5,7 @@
                 <CardArticle
                     v-for="item in news"
                     :key="item.id"
+                    :id="item.id"
                     :title="item.title"
                     :description="item.description"
                     class="list-articles__card"
