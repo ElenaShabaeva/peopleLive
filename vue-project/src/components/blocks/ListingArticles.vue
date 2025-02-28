@@ -7,7 +7,7 @@
                     :key="item.id"
                     :id="item.id"
                     :title="item.title"
-                    :description="item.description"
+                    :description="item.body"
                     class="list-articles__card"
                 />
             </div>
@@ -17,7 +17,6 @@
 
 <script>
 import CardArticle from "./CardArticle.vue";
-import news from "@/json/news.json";
 
 export default {
     components: {
@@ -25,9 +24,26 @@ export default {
     },
     data() {
         return {
-            news: news,
+            news: [],
         };
     },
+    methods: {
+        getNews() {
+            this.$axios("https://jsonplaceholder.typicode.com/posts")
+                .then(response => {
+                    if(response){
+                        this.news = response.data.map((item) => {
+                            item.description = item.body;
+                            //delete item.body;
+                            return item;
+                        });
+                    }
+                });
+        },
+    },
+    created() {
+        this.getNews();
+    }
 };
 </script>
 

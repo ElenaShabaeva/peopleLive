@@ -1,41 +1,54 @@
 <template>
     <div class="blog-article">
         <div class="blog-article__container">
-            <h2 class="blog-article__title">{{ listItem.title }}</h2>
+            <h2 class="blog-article__title">{{ news.title }}</h2>
 
-            <div class="blog-article__author">{{ listItem.author }}</div>
+            <div class="blog-article__author">{{ news.author }}</div>
 
             <div class="blog-article__sections">
                 <div
                     class="blog-article__sections-item"
-                    v-for="item in listItem.sections"
+                    v-for="item in news.sections"
                     :key="item"
                 >
                     {{ item }} 
                 </div>
             </div>
 
-            <p class="blog-article__text"> {{ listItem.description }}</p>
+            <p class="blog-article__text"> {{ news.description }}</p>
         </div>
     </div>
 </template>
 
 <script>
-import news from "@/json/news.json";
 
 export default {
     data() {
         return {
-            news: news,
+            news: {},
         };
     },
     computed: {
-        listItem() {
-            return (
-                this.news.find((item) => this.$route.params.id == item.id) || {}
-            );
+        id() {
+            return + this.$route.params.id;
         },
     },
+    methods: {
+        getPost() {
+            if (!this.id) return;
+            this.$axios(`https://jsonplaceholder.typicode.com/posts/${this.id}`)
+                .then(response => {
+                    this.news = {
+                        title: response.data.title,
+                        description: response.data.body,
+                        author: response.data.userId,
+                    };
+                });
+        },
+    },
+    created() {
+        this.getPost();
+    }
 };
 </script>
 
